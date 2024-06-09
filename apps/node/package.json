@@ -8,5 +8,9 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "description": ""
+  "description": "",
+  "dependencies": {
+    "@repo/db":"*",
+    "typescript": "^5.4.5"
+  }
 }
