@@ -36,6 +36,7 @@ model Subscriber {
   topics       TopicSubscriber[]
   workflow     Workflow[]
   notification Notification[]
+  appid        String
 
   @@unique([developerId, subscriberId])
 }
@@ -83,5 +84,5 @@ model Notification {
   topicId      Int?
   topic        Topic?      @relation(fields: [topicId], references: [id])
   subscriberId Int?
-  subsriber    Subscriber? @relation(fields: [subscriberId], references: [id])
+  subscriber    Subscriber? @relation(fields: [subscriberId], references: [id])
 }
