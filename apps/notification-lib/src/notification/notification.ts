@@ -4,7 +4,6 @@ import db from "@repo/db/client";
 export class NotificationInApp {
   private socket: Socket;
   private appId: string;
-
   constructor({ appId }: { appId: string }) {
     this.appId = appId;
     this.socket = io("http://localhost:8000");
@@ -19,7 +18,6 @@ export class NotificationInApp {
         message: "AppId Not Found",
       };
     }
-
     const developer = db.developer.findFirst({
       where: {
         appId: applicationId,

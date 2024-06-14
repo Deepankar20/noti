@@ -1,4 +1,4 @@
-import db from "@repo/db/client";
+import db from "@repo/db/client"
 
 export class Subscriber {
   private appId: string;
@@ -8,8 +8,6 @@ export class Subscriber {
   }
 
   async addSubscriber(subscriberData: { name: string }) {
-    // Code to add subscriber to the database
-    // with this.appid
 
     const developerData = await db.developer.findFirst({
       where: {

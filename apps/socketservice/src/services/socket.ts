@@ -16,16 +16,25 @@ class SocketService {
 
   public initListeners() {
     console.log("init socket listeners...");
-    let users = {};
+
     const io = this.io;
-    io.on("connect", (socket: any) => {
+
+    io.on("connect", (socket) => {
       console.log(`New Socket Connected : id: ${socket.id}`);
-      const token = socket.handshake.query.userToken;
+      //   const token = socket.handshake.query.userToken;
       //@ts-ignore
+
+      socket.on(
+        "event:inapp",
+        (props: { subscriberId: string; appId: string }) => {
+          const { appId, subscriberId } = props;
+          console.log(props);
+        }
+      );
     });
   }
 
-  get io() {
+  get io(): Server {
     return this._io;
   }
 }
