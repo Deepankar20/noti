@@ -83,7 +83,6 @@ model Notification {
   content      String
   topicId      Int?
   topic        Topic?      @relation(fields: [topicId], references: [id])
-  subsId       Int?
-  subscriberId String
-  subscriber   Subscriber? @relation(fields: [subsId], references: [id])
+  subscriberId Int?
+  subscriber    Subscriber? @relation(fields: [subscriberId], references: [id])
 }

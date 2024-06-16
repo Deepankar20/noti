@@ -10,8 +10,12 @@
   "author": "",
   "license": "ISC",
   "description": "",
+  "devDependencies": {
+    "tsc-watch": "^6.0.4"
+  },
   "dependencies": {
     "@repo/db": "*",
+    "crypto": "^1.0.1",
     "socket.io-client": "^4.7.5",
     "typescript": "^5.4.5"
   }

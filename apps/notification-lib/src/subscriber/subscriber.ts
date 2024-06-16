@@ -1,15 +1,18 @@
-import db from "@repo/db/client"
+import { prisma } from "../db";
+import { generateUniqueId } from "../utils/createUniqueId";
 
 export class Subscriber {
   private appId: string;
+  public subscriberId: string;
 
   constructor({ appId }: { appId: string }) {
     this.appId = appId;
+    this.subscriberId = "";
   }
 
-  async addSubscriber(subscriberData: { name: string }) {
-
-    const developerData = await db.developer.findFirst({
+  async addSubscriber(subscriberData: { username: string }) {
+    //@ts-ignore
+    const developerData = await prisma.developer.findFirst({
       where: {
         appId: this.appId,
       },
@@ -23,19 +26,29 @@ export class Subscriber {
     }
 
     const devId = developerData?.id;
-    const subscriberId = "";
 
-    await db.subscriber.create({
+    this.subscriberId = await generateUniqueId(
+      this.appId,
+      subscriberData.username
+    );
+
+    await prisma.subscriber.create({
       //@ts-ignore
       data: {
-        subscriberId: subscriberId,
+        subscriberId: this.subscriberId,
         developerId: devId,
+        name: subscriberData.username,
+        appid: this.appId,
       },
     });
+
+    return {
+      subscriberId: this.subscriberId,
+    };
   }
 
-  getSubscribers(subscriberId: string) {
-    // Code to fetch subscribers from the database
+  getSubscriberId(subscriberId: string) {
+    return this.subscriberId;
   }
 
   async delete() {}

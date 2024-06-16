@@ -1,5 +1,5 @@
 import { io, Socket } from "socket.io-client";
-import db from "@repo/db/client";
+import {prisma} from "../db"
 
 export class NotificationInApp {
   private socket: Socket;
@@ -18,7 +18,7 @@ export class NotificationInApp {
         message: "AppId Not Found",
       };
     }
-    const developer = db.developer.findFirst({
+    const developer = prisma.developer.findFirst({
       where: {
         appId: applicationId,
       },
@@ -38,10 +38,10 @@ export class NotificationInApp {
     };
   }
 
-  async trigger(appId: string, subscriberId: string, content: string) {
+  async trigger(subscriberId: string, content: string) {
     const applicationId = (await this.validateAppId()).appId;
 
-    if (applicationId !== appId) {
+    if (applicationId !== this.appId) {
       return {
         code: 403,
         message: "unauthorised access",
@@ -49,10 +49,10 @@ export class NotificationInApp {
     }
 
     try {
-      const subscriber = await db.subscriber.findFirst({
+      const subscriber = await prisma.subscriber.findFirst({
         where: {
           subscriberId,
-          appid: appId,
+          appid: this.appId,
         },
       });
 
@@ -65,7 +65,7 @@ export class NotificationInApp {
 
       this.socket.emit("event:inapp", {
         subscriberId,
-        appId,
+        appId: this.appId,
         content,
       });
     } catch (error) {
