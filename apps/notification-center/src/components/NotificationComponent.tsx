@@ -1,9 +1,11 @@
 import { useSocket } from "@/context/SocketProvider";
+import db from "@repo/db/client";
 
 type NotificationProps = {
   content: string;
   subscriberId: string;
 };
+
 
 export default function NotificationComponent(props: {
   notifications: NotificationProps[];
